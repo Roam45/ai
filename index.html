@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple AI Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        .chat-container {
+            width: 300px;
+            max-width: 90%;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background-color: #4a76a8;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .chat-box {
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .message {
+            margin: 8px 0;
+            padding: 8px;
+            border-radius: 5px;
+            max-width: 70%;
+            line-height: 1.5;
+        }
+
+        .user-message {
+            background-color: #d1e7dd;
+            text-align: right;
+            margin-left: auto;
+        }
+
+        .bot-message {
+            background-color: #ffe5d4;
+            text-align: left;
+            margin-right: auto;
+        }
+
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-right: 1px solid #ddd;
+            outline: none;
+        }
+
+        .chat-input button {
+            padding: 10px;
+            background-color: #4a76a8;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .chat-input button:hover {
+            background-color: #3b5c7b;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>AI Chatbot</h2>
+        </div>
+        <div class="chat-box" id="chat-box">
+            <div class="message bot-message">Hi! I'm here to help. Ask me anything.</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const inputBox = document.getElementById("user-input");
+            const userText = inputBox.value.trim();
+            if (userText === "") return;
+
+            // Display user message
+            displayMessage(userText, "user");
+
+            // Clear input box
+            inputBox.value = "";
+
+            // Bot response
+            const botReply = getBotReply(userText);
+            displayMessage(botReply, "bot");
+        }
+
+        function displayMessage(text, sender) {
+            const chatBox = document.getElementById("chat-box");
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("message", sender === "user" ? "user-message" : "bot-message");
+            messageElement.textContent = text;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function getBotReply(userText) {
+            // Basic keyword-based responses
+            userText = userText.toLowerCase();
+
+            if (userText.includes("hello") || userText.includes("hi")) {
+                return "Hello! How can I assist you today?";
+            } else if (userText.includes("how are you")) {
+                return "I'm just a bot, but I'm here to help!";
+            } else if (userText.includes("help")) {
+                return "Sure, I'm here to help! What do you need assistance with?";
+            } else if (userText.includes("bye")) {
+                return "Goodbye! Have a great day!";
+            } else {
+                return "I'm not sure about that. Can you ask something else?";
+            }
+        }
+    </script>
+</body>
+</html>
